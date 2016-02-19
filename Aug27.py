@@ -17,6 +17,7 @@ from UVVistools import findpeak
 
 
 def Aug27abs():
+    """UVvis spectra of CdS dots prepared for Zurich XPS"""
     figure()
     title('Aug27')
     a = loadtxt('/home/chris/Dropbox/DataWeiss/150827/CdS_synthAug27.csv', skiprows = 1, unpack= True,delimiter=',')

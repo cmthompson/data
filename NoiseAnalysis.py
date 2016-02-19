@@ -4,7 +4,7 @@ Created on Wed Mar  4 14:00:46 2015
 
 @author: chris
 """
-from RamanTools3 import *
+from ramanTools.RamanSpectrum import *
 
 def n():  ########### remove interference noise from 4_light
    

@@ -6,7 +6,7 @@ Created on Tue Nov 25 15:13:48 2014
 """
 
 import os
-import RamanTools
+from ramanTools.RamanSpectrum import *
 from scipy import optimize
 import pdb
 from numpy import fft

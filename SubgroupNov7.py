@@ -6,7 +6,7 @@ Created on Thu Nov  6 08:48:21 2014
 
 Subgroup files for Nov7
 """
-import RamanTools2 as RamanTools
+from ramanTools import RamanSpectrum as RamanTools
 
 
 def Fig1():

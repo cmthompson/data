@@ -6,7 +6,7 @@ Created on Sun Jan 11 18:23:47 2015
 """
 
 
-from RamanTools3 import *
+from ramanTools.RamanSpectrum import *
 
 
     

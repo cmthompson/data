@@ -4,15 +4,17 @@ Created on Tue Feb 24 17:11:22 2015
 
 @author: chris
 """
+
 import imp
 import pandas
-simpleFresnel = imp.load_source('respace_x', '/home/chris/PyScripts/Old stuff/simpleFresnel.py')
+#simpleFresnel = imp.load_source('respace_x', '/home/chris/PyScripts/Old stuff/simpleFresnel.py')
 from pandas import Series
-from SFGMeFiles.SFG_Analysis import SG_Smooth
+from SFGMe.SFG_Analysis import SG_Smooth
 import pdb
-from RamanTools3 import *
-
-NA = imp.load_source('remove_dust', '/home/chris/Documents/Subgroup Stuff/NoiseAnalysis_2.py')
+from ramanTools.RamanSpectrum import *
+import weissdatavariables
+from NoiseAnalysis_2 import remove_dust
+#NA = imp.load_source('remove_dust', 'NoiseAnalysis_2.py')
 
 def Lamp(): #calibration of the lamp
      global correctionVis1

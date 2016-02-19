@@ -4,7 +4,7 @@ Created on Mon Feb  9 14:07:03 2015
 
 @author: chris
 """
-from RamanTools3 import *
+from ramanTools.RamanSpectrum import *
 def spinning():  ## test of optical damage decreased by spinning
 
     os.chdir('/home/chris/Documents/DataWeiss/150209')

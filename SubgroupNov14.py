@@ -4,7 +4,7 @@ Created on Fri Nov 14 08:38:59 2014
 
 @author: chris
 """
-import RamanTools2 as RamanTools
+import ramanTools.RamanSpectrum as RamanTools
 
 def Fig1():  ### show the phonon
     for filename in [#'/home/chris/Documents/DataWeiss/141113/1_10TCNQ on CdSE_1.txt',

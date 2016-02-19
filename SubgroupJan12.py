@@ -4,7 +4,7 @@ Created on Mon Jan 12 13:51:51 2015
 
 @author: chris
 """
-from RamanTools3 import *
+from ramanTools.RamanSpectrum import *
 
 import os
 

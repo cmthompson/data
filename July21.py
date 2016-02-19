@@ -278,7 +278,8 @@ def July27UVVis():
    
     
     
-def July28():  ## #MBT series on cdse enriched dots with and without a washing step
+def July28():
+    """MBT series on cdse enriched dots with and without a washing step"""
 
     fig1 = figure(figsize=(12, 6)) 
     
@@ -469,7 +470,8 @@ def July28():  ## #MBT series on cdse enriched dots with and without a washing s
 
 
 
-def July30():  ## #MBT series on cdse enriched dots with and without a washing step
+def July30():  
+    """MBT series on cdse enriched dots with and without a washing step"""
     os.chdir('/home/chris/Documents/DataWeiss/150730')
     fig1 = figure(figsize=(12, 6)) 
     
@@ -634,6 +636,7 @@ def July30():  ## #MBT series on cdse enriched dots with and without a washing s
     return 0
     
 def Aug3():
+    
     a = RamanSpectrum('/home/chris/Documents/DataWeiss/150803/sample U/sample washed stoich_3.txt') # 0 eq MBT  with wash
     b = RamanSpectrum('/home/chris/Documents/DataWeiss/150803/sample U/sample washed stoich_2.txt') # 0 eq MBT  with wash
     c = RamanSpectrum('/home/chris/Documents/DataWeiss/150803/sample U/sample washed stoich_4.txt') # 0 eq MBT  with wash
@@ -653,6 +656,7 @@ def Aug3():
     return 0
     
 def FinalKen():
+    """data finally used for Ken's paper.  MBT treated dots for stoichiometric and Cd-enriched"""
 
     os.chdir('/home/chris/Documents/DataWeiss/150730')
     fig1 = figure(figsize=(12, 6)) 

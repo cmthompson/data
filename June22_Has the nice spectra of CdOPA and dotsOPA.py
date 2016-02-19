@@ -12,6 +12,7 @@ from scipy.optimize import minimize
 from matplotlib import gridspec
 
 def June22():
+    """Nice spectra of CdOPA and dotsOPA"""
     d = RamanSpectrum('/home/chris/Dropbox/DataWeiss/150622/150622_06.txt')   ###  pH 1
     a = RamanSpectrum('/home/chris/Dropbox/DataWeiss/150622/150622_07.txt')   ### pH 5
     b = RamanSpectrum('/home/chris/Dropbox/DataWeiss/150622/150622_08.txt')  ### pH 12
@@ -57,6 +58,7 @@ def June22():
     return 0
     
 def MBTSeries():
+    """methylbenzenethiol exchanged CdSe quantum dots on June12"""
     clf()
     ax1 = gca()
     
@@ -151,7 +153,7 @@ def MBTSeries():
     ax2 = figure().add_subplot(111)
     for i in [thirtytwo, eightyfour, oneseventynine, sixhundredforty]:
         guess = [100,500,500,1065,1080,1085,7, 7,7,0,i[1100]]
-        r = fitspectrum(i,(1050,1105), 'ThreeGaussian', guess)
+        r = fitspectrum(i,(1050,1105), 'xGaussian', guess)
         for p in r.peaks:
             ax1.plot(r.x, p,'k', linewidth = 2)
         fits1.append(r.areas[1]/r.areas[2]) 
@@ -188,6 +190,7 @@ def June29():
     
     
 def June30():
+    """CdOPA references and some dots"""
     
     d = RamanSpectrum('/home/chris/Dropbox/DataWeiss/150622/150622_06.txt')   ###  pH 1
     a = RamanSpectrum('/home/chris/Dropbox/DataWeiss/150622/150622_07.txt')   ### pH 5
@@ -220,7 +223,7 @@ def June30():
     c = add_RamanSpectra(a,b)
     
     b.plot()
-    OPARef.plot()
+   # OPARef.plot()
     return 0   
     
 def June30MetalExchange():
@@ -766,6 +769,7 @@ def July10UVVis():
     return 0
     
 def July11():
+    """some fits of MBT treated CdSe dots"""
     fig = figure(figsize=(12, 6)) 
     gs = gridspec.GridSpec(1, 2, width_ratios=[2, 1]) 
     ax1 = subplot(gs[0])

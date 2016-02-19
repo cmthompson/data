@@ -15,9 +15,11 @@ from matplotlib.font_manager import FontProperties
 from scipy.optimize import minimize
 from matplotlib import gridspec
 from UVVistools import *
+import weissdatavariables
 
 
-def Aug16():  ## CdS dots synthesized August 16 UVVis and fluorescence
+def Aug16():  
+     """CdS dots synthesized August 16 UVVis and fluorescence"""
      a =   loadtxt('/home/chris/Dropbox/DataWeiss/150816/dotsaug16UVVis.csv',delimiter = ',',skiprows=1,unpack=True)
     
      plot(a[0],a[1])
@@ -37,7 +39,8 @@ def Aug16():  ## CdS dots synthesized August 16 UVVis and fluorescence
      
      return 0
      
-def Aug17():  ## CdS dots synthesized August 17 UVVis and fluorescence
+def Aug17():  
+     """CdS dots synthesized August 17 UVVis and fluorescence"""
      a =   loadtxt('/home/chris/Dropbox/DataWeiss/150817/UVVisAug17CdSdots.csv',delimiter = ',',skiprows=1,unpack=True)
     
      plot(a[0],a[1])
@@ -57,7 +60,8 @@ def Aug17():  ## CdS dots synthesized August 17 UVVis and fluorescence
      
      return 0
 
-def Aug18():  ## CdS dots capped with phosphonopropionic acid and mercaptopropionic acid.  UVVis and fluorescence
+def Aug18():  
+     """CdS dots capped with phosphonopropionic acid (PPA) and mercaptopropionic acid (MPA).  UVVis and fluorescence.  Data used in PPA exchange paper."""
      clf()
      font = {'family' : 'sans-serif',
         'weight' : 'normal',
@@ -117,7 +121,8 @@ def Aug18():  ## CdS dots capped with phosphonopropionic acid and mercaptopropio
      
      return 0
 
-def pHdepfluorescence(): ### August 20
+def pHdepfluorescence(): 
+    """August 20 pH dependence of fluorescence of PPA capped dots"""
     water = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial1Fluorescence/water1waterd1.dat','\t', unpack=True)
     pH13 = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial1Fluorescence/pH131pH13d1.dat','\t', unpack=True)
     pH12 = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial1Fluorescence/pH121pH12d1.dat', delimiter ='\t', unpack=True)
@@ -136,10 +141,7 @@ def pHdepfluorescence(): ### August 20
     absxpeaks =list()
     absypeaks=list()
     normalizationvalues = list()
-    
-       
-    
-   
+
     figure()
     ax1=subplot(111)
     title('UVVis')
@@ -185,9 +187,7 @@ def pHdepfluorescence(): ### August 20
             ypeaks.append(max(polyeval(r,xs)))
     legend(['13','12','11','10','8.5','7','5','4'])
     plot(xpeaks,ypeaks,'s-')
-    savetxt('/home/chris/Desktop/UVVis.txt', transpose(UVVis), header='pH13 pH12 pH11 pH10 pH8.5 pH7 pH5 pH4' )
-    savetxt('/home/chris/Desktop/Fluor.txt', transpose(f), header='pH13 pH12 pH11 pH10 pH8.5 pH7 pH5 pH4' )
-        
+    
         
 #    
     figure()
@@ -199,7 +199,8 @@ def pHdepfluorescence(): ### August 20
     legend(['fluorescence', 'absorption'])
     return (xpeaks,absxpeaks[:-2])
     
-def pHdepfluorescenceTrial2(): ### August 20
+def pHdepfluorescenceTrial2(_plot=False): 
+    """August 20"""
     water = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial2Fluorescence/water.dat','\t', unpack=True)
     pH13 = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial2Fluorescence/pH13.dat','\t', unpack=True)
     pH12 = loadtxt('/home/chris/Dropbox/DataWeiss/150820/Trial2Fluorescence/pH12.dat', delimiter ='\t', unpack=True)
@@ -217,11 +218,7 @@ def pHdepfluorescenceTrial2(): ### August 20
     absypeaks=list()
     normalizationvalues = list()
     
-       
-    
-   
-    figure()
-    title('UVVis')
+
     x2 = argmin(abs(UVVis[0]-415))
     x1= argmin(abs(UVVis[0]-430))
     x400 = argmin(abs(UVVis[0]-400))
@@ -229,67 +226,64 @@ def pHdepfluorescenceTrial2(): ### August 20
 
     for z in UVVis[1:]:
         #z-=z[0]
-        peak = findpeak(UVVis[0], z,(390,420))
-        print peak
+        r = findpeak(UVVis[0], z,(415,430))
         normalizationvalues.append(z[x400])
-        r   = polyfit(UVVis[0][x1:x2],z[x1:x2],2)
-        xs = arange(415,435,0.1)
-       
-        absxpeaks.append(xs[argmax(polyeval(r,xs))])
-        absypeaks.append(max(polyeval(r,xs)))
-       
-        plot(UVVis[0],z)
-  
+        absxpeaks.append(r[0])
+        absypeaks.append(r[1])
 
-    legend(['13','12','11','10','8.5','7','5','4'])
-    
-    figure()
-    title('fluorescence spectra')
     slist = [pH13,pH12,pH11,pH10,pH85,pH7,pH5,pH4]
     for i in range(len(slist)):
         z=slist[i]
         z[3] = SGsmooth(z[0],z[3])
         z[3]-=water[3]
-        
         z[3]/=normalizationvalues[i]
-        plot(z[0],z[3])
+
         if i<6:
-            r   = polyfit(z[0][23:33],z[3][23:33],3)
-            xs = arange(420,450,0.1)
-            #plot(xs,polyeval(r,xs))
-            xpeaks.append(xs[argmax(polyeval(r,xs))])
-            ypeaks.append(max(polyeval(r,xs)))
-    legend(['13','12','11','10','8.5','7','5','4'])
-    plot(xpeaks,ypeaks,'s-')
-    
-    figure()
-    title('peak positions')
-    plot([13,12,11,10,8.5,7],xpeaks,'s-')
-    plot([13,12,11,10,8.5,7],absxpeaks[:-2],'s-')
-    xlabel('pH')
-    ylabel('peak position (nm)')
-    legend(['fluorescence', 'absorption'])
+            r = findpeak(z[0], z[3],(430,445))
+            xpeaks.append(r[0])
+            ypeaks.append(r[1])
+    if _plot:
+        
+        figure()
+        suptitle('UVVis')
+        for z in UVVis[1:]:plot(UVVis[0],z) 
+        legend(['13','12','11','10','8.5','7','5','4'])
+        
+        slist = [pH13,pH12,pH11,pH10,pH85,pH7,pH5,pH4]
+        figure()
+        suptitle('fluorescence spectra')
+        for i in slist: plot(i[0],i[3]) 
+        legend(['13','12','11','10','8.5','7','5','4'])
+        plot(xpeaks,ypeaks,'s-')
+        
+        figure()
+        suptitle('peak positions')
+        plot([13,12,11,10,8.5,7],xpeaks,'s-')
+        plot([13,12,11,10,8.5,7],absxpeaks[:-2],'s-')
+        xlabel('pH')
+        ylabel('peak position (nm)')
+        legend(['fluorescence', 'absorption'])
+        
     return (xpeaks,absxpeaks[:-2])
         
-
-    return (xpeaks,absxpeaks[:-2])
     
-def nmtomeV():  ### August 20 data converted to meV
+def nmtomeV():  
+    """August 20 data converted to meV.  CdS dots with PPA and MPA.  Data plotted vs. meV"""
     
     a = [13,12,11,10,8.5,7]
     b= array(pHdepfluorescenceTrial2())
-    c = array(pHdepfluorescence())
+    c = array([0,0,0,0,0,0,0,0,0])#pHdepfluorescence())
     d = array(MPAdots_pHdep())
    
     average_fluorshift = (1240000/b[0]+ 1240000/c[0]-1240000/b[0][0]-1240000/c[0][0])/2
     average_absshift = (1240000/b[1]+ 1240000/c[1]-1240000/b[1][0]-1240000/c[1][0])/2
 
     
-    b[0] = 1240000/b[0]-1240000/d[1][0]
-    b[1] = 1240000/b[1]-1240000/d[1][0]
-    c[0] = 1240000/c[0]-1240000/d[1][0]
-    c[1] = 1240000/c[1]-1240000/d[1][0]
-    d[1] = 1240000/d[1]-1240000/d[1][0]
+    b[0] = 1240000/b[0]-1240000/422
+    b[1] = 1240000/b[1]-1240000/422
+    c[0] = 1240000/c[0]-1240000/422
+    c[1] = 1240000/c[1]-1240000/422
+    d[1] = 1240000/d[1]-1240000/422
     
     figure()
     print c[1]
@@ -307,6 +301,7 @@ def nmtomeV():  ### August 20 data converted to meV
     return 0
     
 def reversibilityAug20():
+    """PPA-capped CdS dots changing the pH of the sample reversibly with KOH and HCl"""
     UVVis=loadtxt('/home/chris/Dropbox/DataWeiss/150820/pH Reversibility.csv',delimiter=',', unpack =True, skiprows = 1)
     figure()
     title('UVVis')
@@ -333,8 +328,8 @@ def reversibilityAug20():
         annotate(str(pHs[i]), (i,absxpeaks[i]), fontsize = 20)
     return 0
     
-def MPAdots_pHdep(): ### August 20
-    os.chdir('/home/chris/Dropbox/DataWeiss/150824/MPAdotsfluorescence')
+def MPAdots_pHdep(_plot=False): ### August 20
+    os.chdir('150824/MPAdotsfluorescence')
     water = loadtxt('water.dat','\t', unpack=True)
     pH13 = loadtxt('pH13.dat','\t', unpack=True)
     pH12 = loadtxt('pH12.dat', delimiter ='\t', unpack=True)
@@ -353,9 +348,6 @@ def MPAdots_pHdep(): ### August 20
     absypeaks=list()
     normalizationvalues = list()
     
-       
-    
-   
     figure()
     title('UVVis')
     x2 = argmin(abs(UVVis[0]-415))
@@ -366,19 +358,16 @@ def MPAdots_pHdep(): ### August 20
         z-=z[0]
         normalizationvalues.append(z[x400])
         z/=z[x400]
-        r   = polyfit(UVVis[0][x1:x2],z[x1:x2],2)
-        xs = arange(415,435,0.1)
+        r = findpeak(UVVis[0],z,(420,430))
+  
+        absxpeaks.append(r[0])
+        absypeaks.append(r[1])
        
-        absxpeaks.append(xs[argmax(polyeval(r,xs))])
-        absypeaks.append(max(polyeval(r,xs)))
-       
-        plot(UVVis[0],z)
   
 
     legend(['13','12','11','10','8.5','7','5','4','3'])
     
-    figure()
-    title('fluorescence spectra')
+    
     slist = [pH13,pH12,pH11,pH10,pH85,pH7,pH5,pH4,pH3]
     for i in range(len(slist)):
         z=slist[i]
@@ -386,23 +375,35 @@ def MPAdots_pHdep(): ### August 20
         z[3]-=water[3]
         
         z[3]/=normalizationvalues[i]
-        plot(z[0],z[3])
+        
         if i<16:
-            r   = polyfit(z[0][23:33],z[3][23:33],3)
-            xs = arange(427,450,0.1)
-            #plot(xs,polyeval(r,xs))
-            xpeaks.append(xs[argmax(polyeval(r,xs))])
-            ypeaks.append(max(polyeval(r,xs)))
-    legend(['13','12','11','10','8.5','7','5','4','3'])
-    plot(xpeaks[4:7],ypeaks[4:7],'s-')
+            r = findpeak(z[0],z[3],(427,435))
+            xpeaks.append(r[0])
+            ypeaks.append(r[1])
+        
     
-    figure()
-    title('peak positions')
-    plot([10,8,7],xpeaks[4:7],'s-')
-    plot([13,12,11,10,8,7,5,4,3],absxpeaks,'s-')
-    xlabel('pH')
-    ylabel('peak position (nm)')
-    legend(['fluorescence', 'absorption'])
+    if _plot:
+        
+        for z in UVVis[1:]:
+            plot(UVVis[0],z)        
+        legend(['13','12','11','10','8.5','7','5','4','3'])
+        
+        figure()
+        title('fluorescence spectra')
+        for i in range(len(slist)):   
+            z=slist[i]
+            plot(z[0],z[3])
+        legend(['13','12','11','10','8.5','7','5','4','3'])
+        plot(xpeaks[4:7],ypeaks[4:7],'s-')
+        
+
+        figure()
+        title('peak positions')
+        plot([10,8,7],xpeaks[4:7],'s-')
+        plot([13,12,11,10,8,7,5,4,3],absxpeaks,'s-')
+        xlabel('pH')
+        ylabel('peak position (nm)')
+        legend(['fluorescence', 'absorption'])
         
 
     return (xpeaks,absxpeaks)
