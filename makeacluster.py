@@ -13,6 +13,7 @@ import itertools
 import numpy
 
 
+
 def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                  module = 'nwchem',
                  removehangeroners = True, surfacepassivation=True,_plot=True):
@@ -191,7 +192,7 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
 
     listofcoordlists = [Cdcoordlist1,Cdcoordlist2,Scoordlist1,Scoordlist2,OHcoordlist,Hcoordlist]
     alllists = ndarray((0,3))                                                                   
-
+    surface_atoms_count = 0
 
     """Surface passivation with cations and anions"""
     if surfacepassivation:
@@ -204,10 +205,12 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                 pass
             else:
                 #print 'undercoordinated atom found'
+                surface_atoms_count +=1
                 for s in tetcoord:
                     if not any(sum((x[:]-s)**2,axis=1)<0.5):# and not any(sum((OHcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1)<0.5):
                        
                         OHcoordlist= append(OHcoordlist,[i+s/sqrt(sum(s**2))*bondlength],axis=0)
+                     
                     else:
                          pass
                         # print min(sum((OHcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1))
@@ -219,10 +222,12 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                 pass
             else:
                 #print 'undercoordinated atom found'
+                surface_atoms_count +=1
                 for s in tetcoord2:
                     if not any(sum((x[:]-s)**2,axis=1)<0.5):# and not any(sum((OHcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1)<0.5):
                         
                         OHcoordlist= append(OHcoordlist,[i+s/sqrt(sum(s**2))*bondlength],axis=0)
+                        
                     else:
                         pass#print min(sum((OHcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1))
     
@@ -234,10 +239,12 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                 pass
             else:
                 #print 'undercoordinated atom found'
+                surface_atoms_count +=1
                 for s in Cdtetcoord1:
                     if not any(sum((x[:]-s)**2,axis=1)<0.5) and not any(sum((Hcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1)<2):
                        
                        Hcoordlist= append(Hcoordlist,[i+s/sqrt(sum(s**2))*bondlength],axis=0)
+                       
              
         for i in Scoordlist2:
             bondlength=1.83 ## angstroms
@@ -246,6 +253,7 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                 pass
             else:
                 #print 'undercoordinated atom found'
+                surface_atoms_count +=1
                 for s in Cdtetcoord2:
                     if not any(sum((x[:]-s)**2,axis=1)<0.5) and not any(sum((Hcoordlist[:]-(i+s/sqrt(sum(s**2))*bondlength))**2,axis=1)<2):
                        
@@ -335,6 +343,7 @@ def makeacluster(radius,charges = 0, distance =4,cadmium_term=False,
                 ', number of point charges:'+str(charges)+
                 ' removehangeroners= '+str(removehangeroners)
                 +'\n')
+    print 'number of surface atoms counted', surface_atoms_count
     with open('/home/chris/Desktop/CdSParticle.xyz','wb') as f:#'+str(numcoreatoms)+'core'+str(charges)+'charges.xyz','wb') as f:
         f.write(str(numatoms)+'\n')
         f.write(commentline)

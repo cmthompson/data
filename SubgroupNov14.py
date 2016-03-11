@@ -3,6 +3,7 @@
 Created on Fri Nov 14 08:38:59 2014
 
 @author: chris
+This is a dataworkup file
 """
 import ramanTools.RamanSpectrum as RamanTools
 

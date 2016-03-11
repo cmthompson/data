@@ -3,6 +3,9 @@
 Created on Sat Feb  6 20:00:42 2016
 
 @author: chris
+
+Weissdatavariables.py contains important stuff for using the data workup scripts I wrote.  It should be imported by any 
+of the data processing scripts.
 """
 
 import os, sys

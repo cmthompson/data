@@ -7,6 +7,10 @@ Created on Wed Oct 14 09:29:02 2015
 
 import ramanTools.RamanSpectrum as rs
 import UVVistools as uv
+import weissdatavariables
+
+
+
 
 def Oct13():
     a= loadtxt('/home/chris/Dropbox/DataWeiss/151013/NMR samples.csv', delimiter = ',', unpack = True, skiprows=1)

@@ -5,23 +5,25 @@ Created on Tue Sep  8 09:42:41 2015
 @author: chris
 """
 from ramanTools.RamanSpectrum import *
-import numpy
 from numpy import *
+import numpy as np
+
 from matplotlib.pyplot import *
 
 
 def findpeak(x,y,rnge,_plot=False,precision=0.01):
     """Locate peak of quantum dot spectrum.  Input spectrum and approximate range for peak.  Return lambdamax and absorbance"""
-    x1 = numpy.argmin(abs(x-rnge[0]))
-    x2 = numpy.argmin(abs(x-rnge[1]))
+    
+    x1 = np.argmin(abs(x-rnge[0]))
+    x2 = np.argmin(abs(x-rnge[1]))
     if x1>x2:
         xtemp = x1
         x1=x2
         x2=xtemp
-    yfit = numpy.polyfit(x[x1:x2],y[x1:x2],5)
+    yfit = np.polynomial.polynomial.polyfit(x[x1:x2],y[x1:x2],5)
     
-    xs_fit = numpy.arange(rnge[0],rnge[1],precision)
-    ys_fit = polyeval(yfit,xs_fit)
+    xs_fit = np.arange(rnge[0],rnge[1],precision)
+    ys_fit = np.polynomial.polynomial.polyval(xs_fit,yfit)
    
     if _plot:
         plot(xs_fit,ys_fit)
@@ -32,28 +34,36 @@ def findpeak(x,y,rnge,_plot=False,precision=0.01):
     
     return (xmax,ymax)
 
-def HWHM(z,rnge):
+def HWHM(z,rnge,_plot=False):
     """Calculate half-width at half max of UVVis spectrum of QDs.  Input spectrum and approximate range for peak.  Return lambdamax and absorbance"""
     precision=0.1
     x=z[0]
     y=z[1]
-    x1 = numpy.argmin(abs(x-rnge[0]))
-    x2 = numpy.argmin(abs(x-rnge[1]))
+    x1 = np.argmin(abs(x-rnge[0]))
+    x2 = np.argmin(abs(x-rnge[1]))
     if x1>x2:
         xtemp = x1
         x1=x2
         x2=xtemp
-    yfit = numpy.polyfit(x[x1:x2],y[x1:x2],5)
-    
-    xs_fit = numpy.arange(rnge[0],rnge[1],precision)
-    ys_fit = polyeval(yfit,xs_fit)
+    yfit = np.polynomial.polynomial.polyfit(x[x1:x2],y[x1:x2],5)
+    xs_fit = np.arange(rnge[0],rnge[1],precision)
+    ys_fit = np.polynomial.polynomial.polyval(xs_fit,yfit)
+   
    
    
     xmax = xs_fit[argmax(ys_fit)]
 
     ymax=max(ys_fit)
-    halfmax = ymax/2
-    halfwidth = abs(xs_fit[argmin(abs(ys_fit-halfmax))] - xmax)  
+#    halfmax = ymax/2
+#    halfwidth = abs(xs_fit[argmin(abs(ys_fit-halfmax))] - xmax)  
+
+    
+    def gaussianfunction(x,A,x0,G,m,b):return m*x+b+A*exp(-(x-x0)**2/G)
+    r = scipy.optimize.curve_fit(gaussianfunction, x[0:argmin(abs(x-xmax))+4], y[0:argmin(abs(x-xmax))+4], [ymax,xmax,10,0,0])[0]
+    
+    halfwidth = 2*sqrt(log(2)*r[2])/2
+    if _plot:
+        plot(x[0:argmin(abs(x-xmax))+4], gaussianfunction (x[0:argmin(abs(x-xmax))+4],*r))
     return halfwidth
     
 
@@ -84,7 +94,10 @@ def indivQY(UVVisfile, UVViscolumn, anthracenecolumn, fluorescencefile, anthrace
             fluorescencerange = (410,473),
             excitationwavelength = 350,
             nliq=1.333,
-            day=0, label=None,color = 'k'):
+            day=0, label=None,color = 'k',
+            _plot_standard = False,
+            subtract_smooth_background_for_anthracene = False
+            ):
     print '-------------------------------------'
     print 'calculating fluorescence yield for', label,'file', fluorescencefile
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -103,12 +116,12 @@ def indivQY(UVVisfile, UVViscolumn, anthracenecolumn, fluorescencefile, anthrace
     anthracene=RamanSpectrum(pandas.Series(a[2][::-1],a[0][::-1]))
     dot=RamanSpectrum(pandas.Series(a[1][::-1],a[0][::-1]))
     
-    anthracene.smoothbaseline((290,300),(390,400))#anthracene.autobaseline((300,390),order=0)
+    if subtract_smooth_background_for_anthracene :
+        anthracene.smoothbaseline((290,300),(390,400))
     
     anthracene[:]-=anthracene[389]
-    #print 'ratio of anthracene absorbance at 350 to its absorbance at 374', anthracene[350]/anthracene[374], '0.6735'
-   
-    anthraceneabsorbance350= anthracene[excitationwavelength]#(anthracene[374]-anthracene[389])*0.6735# 
+    
+    anthraceneabsorbance350= anthracene[excitationwavelength]
     absvalues = dot[excitationwavelength]
     
     nE = 1.359
@@ -122,9 +135,11 @@ def indivQY(UVVisfile, UVViscolumn, anthracenecolumn, fluorescencefile, anthrace
     anthracenefluorescence=RamanSpectrum(pandas.Series(a[1],a[0]))
     
      ###Normalizing to value of anthracene at 420 nm The area for the anthracene fluorescence is related to this value by 78.203    
-    anthracenefluorescencearea = anthracenefluorescence[420]*78.2032212661
+  #  anthracenefluorescencearea = anthracenefluorescence[420]*78.2032212661
+  #  anthracenefluorescencearea = anthracenefluorescence[440]*292.86
+    anthracenefluorescencearea = anthracenefluorescence[470]*1257
     print 'anthracene fluorescence area=', '%.2E' % anthracenefluorescencearea
-    print anthracenefluorescence.calc_area((355,500))/anthracenefluorescence[420], 'ratio of total anthracene fluorescence area to value at 420' 
+    print anthracenefluorescence.calc_area((355,550))/anthracenefluorescence[470], 'ratio of total anthracene fluorescence area to value at 470' 
     
     oneminusTdot = 1-10**(-absvalues)   ##### gives the fraction of photons absorbed by dots
     
@@ -155,11 +170,13 @@ def indivQY(UVVisfile, UVViscolumn, anthracenecolumn, fluorescencefile, anthrace
     print  'fluorescence (bande edg) yield of dot', dotfluorescencearea
     
     if UVVisplot is not None:
-        #anthracene.plot(ax=UVVisplot)#plot(a[0],anthracene)
+        if _plot_standard:
+            anthracene.plot(ax=UVVisplot)#plot(a[0],anthracene)
         dot.plot(ax=UVVisplot,label=label)
     if fluorplot is not None:
         hi.plot(ax = fluorplot,label=label)
-        #anthracenefluorescence.plot(ax = fluorplot,label=label)
+        if _plot_standard:
+            anthracenefluorescence.plot(ax = fluorplot,label=label)
         
         
     return  dotfluorescencearea

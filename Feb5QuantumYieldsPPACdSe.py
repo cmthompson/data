@@ -10,6 +10,9 @@ import weissdatavariables
 import numpy as np
 
 from scipy.special import erf
+from ramanTools.RamanTools import modify_plot
+from ramanTools.RamanSpectrum import *
+from ramanTools.RamanReferences import *
 
 def Feb5QuantumYieldsofCdSePPA():
     """Calculated quantum yields of PPA-capped CdSe dots and MPA capped CdSe in PPA buffers. 160205"""
@@ -46,31 +49,33 @@ def Feb5QuantumYieldsofCdSePPA():
 
     ## yields
     
-    sample1.append(indivCdSeQY(uvvisfile, 'f','ae',fluorfolder +'/Sample1pH6.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH6',color = 'r'))
-    sample1.append(indivCdSeQY(uvvisfile, 'g','ae',fluorfolder +'/Sample1pH7.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH7',color = 'r'))
-    sample1.append(indivCdSeQY(uvvisfile, 'h','ae',fluorfolder +'/Sample1pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH8',color = 'r'))
-    sample1.append(indivCdSeQY(uvvisfile, 'i','ae',fluorfolder +'/Sample1pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH9',color = 'r'))
-    sample1.append(indivCdSeQY(uvvisfile, 'j','ae',fluorfolder +'/Sample1pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH10',color = 'r'))
-    sample1.append(indivCdSeQY(uvvisfile, 'k','ae',fluorfolder +'/Sample1pH11.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = 'CdSe1pH11',color = 'r'))
+    print "oleate dots QY:",indivCdSeQY(uvvisfile, 'ad','ae',fluorfolder +'/OleateDots2.dat', rhodaminefile,fluorescencerange = (500,615), standardfluorescencerange=(520,700),excitationwavelength=500,fluorplot=ax1,nliq=1.375)
+  
     
-    print indivCdSeQY(uvvisfile, 'ad','ae',fluorfolder +'/OleateDots2.dat', rhodaminefile,fluorescencerange = (500,615), standardfluorescencerange=(520,700),excitationwavelength=500,fluorplot=ax1,nliq=1.359)
+    sample1.append(indivCdSeQY(uvvisfile, 'f','ae',fluorfolder +'/Sample1pH6.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
+    sample1.append(indivCdSeQY(uvvisfile, 'g','ae',fluorfolder +'/Sample1pH7.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
+    sample1.append(indivCdSeQY(uvvisfile, 'h','ae',fluorfolder +'/Sample1pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
+    sample1.append(indivCdSeQY(uvvisfile, 'i','ae',fluorfolder +'/Sample1pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
+    sample1.append(indivCdSeQY(uvvisfile, 'j','ae',fluorfolder +'/Sample1pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
+    sample1.append(indivCdSeQY(uvvisfile, 'k','ae',fluorfolder +'/Sample1pH11.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax1,fluorplot = ax1,day = 0,label = '',color = 'r'))
     
-    sample2.append(indivCdSeQY(uvvisfile, 'l','ae',fluorfolder +'/Sample2pH6.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH6',color = 'r'))
-    sample2.append(indivCdSeQY(uvvisfile, 'm','ae',fluorfolder +'/Sample2pH7.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH7',color = 'r'))
-    sample2.append(indivCdSeQY(uvvisfile, 'n','ae',fluorfolder +'/Sample2pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH8',color = 'r'))
-    sample2.append(indivCdSeQY(uvvisfile, 'o','ae',fluorfolder +'/Sample2pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH9',color = 'r'))
-    sample2.append(indivCdSeQY(uvvisfile, 'p','ae',fluorfolder +'/Sample2pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH10',color = 'r'))
+    
+    sample2.append(indivCdSeQY(uvvisfile, 'l','ae',fluorfolder +'/Sample2pH6.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = '',color = 'r'))
+    sample2.append(indivCdSeQY(uvvisfile, 'm','ae',fluorfolder +'/Sample2pH7.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = '',color = 'r'))
+    sample2.append(indivCdSeQY(uvvisfile, 'n','ae',fluorfolder +'/Sample2pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = '',color = 'r'))
+    sample2.append(indivCdSeQY(uvvisfile, 'o','ae',fluorfolder +'/Sample2pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = '',color = 'r'))
+    sample2.append(indivCdSeQY(uvvisfile, 'p','ae',fluorfolder +'/Sample2pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = '',color = 'r'))
    #sample2.append(indivCdSeQY(uvvisfile, 'q','ae',fluorfolder +'/Sample2pH11.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax2,fluorplot = ax2,day = 0,label = 'CdSe1pH11',color = 'r'))
     
-    sample3.append(indivCdSeQY(uvvisfile, 'r','ae',fluorfolder +'/Sample3pH6.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH6',color = 'r'))
-    sample3.append(indivCdSeQY(uvvisfile, 's','ae',fluorfolder +'/Sample3pH7.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH7',color = 'r'))
-    sample3.append(indivCdSeQY(uvvisfile, 't','ae',fluorfolder +'/Sample3pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH8',color = 'r'))
-    sample3.append(indivCdSeQY(uvvisfile, 'u','ae',fluorfolder +'/Sample3pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH9',color = 'r'))
+    sample3.append(indivCdSeQY(uvvisfile, 'r','ae',fluorfolder +'/Sample3pH6.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = '',color = 'r'))
+    sample3.append(indivCdSeQY(uvvisfile, 's','ae',fluorfolder +'/Sample3pH7.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = '',color = 'r'))
+    sample3.append(indivCdSeQY(uvvisfile, 't','ae',fluorfolder +'/Sample3pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = '',color = 'r'))
+    sample3.append(indivCdSeQY(uvvisfile, 'u','ae',fluorfolder +'/Sample3pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = '',color = 'r'))
     sample3.append(indivCdSeQY(uvvisfile, 'v','ae',fluorfolder +'/Sample3pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH10',color = 'r'))
     sample3.append(indivCdSeQY(uvvisfile, 'w','ae',fluorfolder +'/Sample3pH11.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax3,fluorplot = ax3,day = 0,label = 'CdSe1pH11',color = 'r'))
    
-    sample4.append(indivCdSeQY(uvvisfile, 'x','ae',fluorfolder +'/Sample4pH6.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH6',color = 'r'))
-    sample4.append(indivCdSeQY(uvvisfile, 'y','ae',fluorfolder +'/Sample4pH7.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH7',color = 'r'))
+    sample4.append(indivCdSeQY(uvvisfile, 'x','ae',fluorfolder +'/Sample4pH6.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH6',color = 'r'))
+    sample4.append(indivCdSeQY(uvvisfile, 'y','ae',fluorfolder +'/Sample4pH7.dat', rhodaminefile,fluorescencerange = (524,590), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH7',color = 'r'))
     sample4.append(indivCdSeQY(uvvisfile, 'z','ae',fluorfolder +'/Sample4pH8.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH8',color = 'r'))
     sample4.append(indivCdSeQY(uvvisfile, 'aa','ae',fluorfolder +'/Sample4pH9.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH9',color = 'r'))
     sample4.append(indivCdSeQY(uvvisfile, 'ab','ae',fluorfolder +'/Sample4pH10.dat', rhodaminefile,fluorescencerange = (524,615), standardfluorescencerange=(520,700),excitationwavelength=500,UVVisplot = Aax4,fluorplot = ax4,day = 0,label = 'CdSe1pH10',color = 'r'))
@@ -129,7 +134,7 @@ def Feb5QuantumYieldsofCdSePPA():
 #        fl = transpose([ax4.lines[-2].get_xdata(), ax4.lines[-2].get_ydata()])
 #        savetxt('../../Raul/Ligand Exchange outline/FiguresAndData/FluorescenceCdSeMPA.csv',fl,delimiter = ',', header = 'wavelength, PPAcappedCdSepH11, MPAcappedCdSepH11, oleate capped CdSe in hexanes' )
 ###        
-    return 0
+    return (sample1, sample2, sample3, sample4)
     
 
     
@@ -141,10 +146,11 @@ def Feb8CdSeResonanceRaman():
         a.autobaseline((0,600),2)
         a.plot()
    
-    (Table_SPIDcorrect473*500).plot()
-#    a = SPIDcorrect633(a)
-#    a.plot()
+    modify_plot(ax=gca())
+    
     return 0
+
+    
 
 
 def Feb9TCSPC(numberofexponentials):
@@ -379,7 +385,7 @@ def Feb8Alec():
     b = RamanSpectrum('160208/160208_03.txt')
     c = RamanSpectrum('160208/160208_04.txt')
     d = RamanSpectrum('160208/160208_05.txt')
-    CdTP = RamanSpectrum('/home/chris/googledrive/WeissData/150507/150507_01.txt')
+    CdTP = RamanSpectrum('150507/150507_01.txt')
     CdTP.normalize()
     (MeOTPRef/max(MeOTPRef)).plot()
     (CdTP/0.4+1.2).plot()
@@ -413,23 +419,22 @@ def Feb8Alec():
         
         i.plot()
     
-    legend(['control', 'thiophenol', 'thiophenol','MeOTP'])
+    legend(['MeOTP','Cd(thiophenol$_2$)', 'perovskite', 'perovskite+thiophenol'])
+    
+    CdTP.to_csv('/home/chris/Desktop/Alec/Cd-thiophenol-complex.csv',header = 'freq (cm-1), intensity')
+    (MeOTPRef/max(MeOTPRef)).to_csv('/home/chris/Desktop/Alec/free_methylthiophenol.csv',header = 'freq (cm-1), intensity')
+    b.to_csv('/home/chris/Desktop/Alec/perovskite_no_thiophenol.csv',  header = 'freq (cm-1), intensity')
+    c.to_csv('/home/chris/Desktop/Alec/perovskite_with_thiophenol.csv', header = 'freq (cm-1), intensity')
+    ylabel('Intensity')
+    xlabel('Frequency (cm-1)')
+    xlim(100,3600)
+    ylim(0,6.5)
+    savefig('/home/chris/Desktop/Alec/perovskite_figure.png', dpi=300)
+    
     
     return 0
     
-    
-def Feb8CdSeResonanceRaman():
-    """ResonanceRaman spectra of CdSe dots with PPA ligand in water."""
-    for i in range(10,17):
-        a= RamanSpectrum('160208/160208_'+str(i)+'.txt')
-        a.smooth()
-        a.autobaseline((0,600),2)
-        a.plot()
-   
-    (Table_SPIDcorrect473*500).plot()
-#    a = SPIDcorrect633(a)
-#    a.plot()
-    return 0
+
 
 
 def Feb9UVVis(): 
@@ -470,7 +475,7 @@ def Feb9QY():
     ###### spectra.  No this is not ideal, but it will introduce only a constant multiplicative factor into all the 
     ##### QYs.  It will not affect the ratio of k_r's at all.  
     QYdots_Feb10 = indivQY(uvvisfile, 'b','c','160209/160209fluor/DataForQY/oleatedots_standardize.dat', 
-                    '160209/160209fluor/DataForQY/anthracene.dat',fluorescencerange = (382,467), excitationwavelength=350)#,UVVisplot = ax1,fluorplot = ax1)
+                    '160209/160209fluor/DataForQY/anthracene.dat',fluorescencerange = (382,467), excitationwavelength=350,nliq=1.375)#,UVVisplot = ax1,fluorplot = ax1)
     
     print 'QY of oleate capped QDs', QYdots_Feb10 
     a = loadtxt('160209/160209fluor/DataForQY/Oleateandanthraceneuvvis.csv', unpack = True, delimiter = ',', skiprows=1, usecols=(0,1))  
@@ -478,14 +483,17 @@ def Feb9QY():
     print 'absorbance of oleate capped dots at 350:', a[1,argmin(abs(a[0]-350))],'; absorbance at 375:', a[1,argmin(abs(a[0]-375))] 
     oleateabsfactor = (1-10**-a[1,argmin(abs(a[0]-350))])/(1-10**-a[1,argmin(abs(a[0]-375))])
     print 'oleate absfactor', oleateabsfactor   ## correction for absorbance at 375 and 350.  Fluorescence of CdS on Feb9, excited at 375.  That on Feb10 excited at 350nm)
+   
+   
+   
     QYdots_Feb9 = oleateabsfactor*indivQY(uvvisfile, 'b','c','160209/160209fluor/CdSOleatehex.dat', 
-                    '160209/160209fluor/DataForQY/anthracene.dat',subtractfluorfile =None, fluorescencerange = (382,467), excitationwavelength=350,fluorplot = None)
+                    '160209/160209fluor/DataForQY/anthracene.dat',subtractfluorfile =None, fluorescencerange = (382,467), nliq=1.375, excitationwavelength=350,fluorplot = ax2,_plot_standard=True)
     
     multfactor = QYdots_Feb10/QYdots_Feb9
     print 
     print 'mulitply all valued of fluoresence yield by', multfactor 
     
-    return 0
+   
 #    
 #    """check the QY correction by commparing QY for CdS2 at pH8 from yesterday and today.  There must be a correction for the difference in excitation wavelength"""
 #    a = loadtxt('160209/160209_TCSPCdots.csv', unpack = True, delimiter = ',', skiprows=1, usecols=(0,4))  
@@ -571,7 +579,16 @@ def Feb9_calculate_kr():
 #    
 #    kr_s1_1exp = array(QY1)/tau_ave_s1[1:]
 #    kr_s2_1exp = array(QY2)/tau_ave_s2[1:]
-    
+    knrs = 1/timeconstants_s1['tau'][1:]-transpose([QY1/tau_ave_s1[1:]]*2)
+    knrs2 = 1/timeconstants_s2['tau'][1:]-transpose([QY2/tau_ave_s2[1:]]*2)
+    close('all')
+    figure()
+    suptitle('non radiative rates')
+    plot(pHs, knrs[:,0])
+    plot(pHs, knrs[:,1])
+    plot(pHs, knrs2[:,0])
+    plot(pHs, knrs2[:,1])
+    legend(['sample1pop1', 'sample1pop2', 'sample2pop1', 'sample2pop2'])
     
     figure()
     
@@ -606,7 +623,7 @@ def Feb9_calculate_kr():
 #    plot(pHs, kr_s1_2exp/kr_s1_2exp[0],'b')
 #    plot(pHs, kr_s2_2exp/kr_s2_2exp[0],'b')
     
-    return 0
+    return (np.append(pHs, pHs), np.append(kr_s1_2exp,kr_s2_2exp))
     
 def Feb16TCSPC(numberofexponentials, axis):
     """TCSPC results from PPA capped CdS dots on Feb9 at pH 6 8 and 11"""
@@ -827,15 +844,7 @@ def compareFeb16andFeb9():
     e = array(list(sum(i['tau']*i['amp'])/sum(i['tau']**2*i['amp']) for i in b[0]))
     f = array(list(sum(i['tau']*i['amp'])/sum(i['tau']**2*i['amp']) for i in b[1]))
  
-   
-#    c = array([  5.69624476e-06 ,  6.96996578e-06,   1.67617944e-05,   2.61777234e-05,
-#   1.23805017e-05,   6.02402522e-06])
-#    d = array([  8.61969000e-06,   1.18576468e-05,  8.75299225e-05 ,  9.01177682e-05,
-#         1.88933890e-05 ,  8.28675990e-07] )
-#    e = array([  2.31043902e-05 ,  3.74654270e-05,   6.23677151e-05 ,  9.22556287e-05,
-#   2.12233636e-04] )
-#    f = array([  1.94937545e-05,   7.18920018e-05,   6.71878620e-05 ,  1.54499259e-04,
-#   2.85160662e-04] )
+
    
     kr16_1 = array([  5.68940824e-06,   6.96327361e-06,   3.20817230e-05,
          2.61565900e-05,   1.23618275e-05,   6.01393212e-06])
@@ -856,26 +865,30 @@ def compareFeb16andFeb9():
     plot([7.0,7.8,8.4,9.0,9.4],f[1:],'ks')
     
     figure()
-    plot([5.6, 7.5,8.4,10.0,11.1,11.8],kr16_1/kr16_1[2],'sk')
-    plot([5.6, 7.5,8.4,10.2,11.1,12.0],kr16_2/kr16_2[2],'sk')
-    plot([7.0,7.8,8.4,9.0,9.4],kr_s1_exp2/kr_s1_exp2[2],'sk')
-    plot([7.0,7.8,8.4,9.0,9.4],kr_s2_exp2/kr_s2_exp2[2],'sk')
-#    g = append(c[1:],d[1:])
-#    g = append(g,e[1:])
-#    g = append(g,f[1:])
-#    r = numpy.polyfit([5.6, 7.5,8.4,10.0,11.1,11.8,5.6, 7.5,8.4,10.0,11.1,11.8,7.0,7.8,8.4,9.0,9.4,7.0,7.8,8.4,9.0,9.4],g,3)
-#    y = polyeval(r,arange(5.5,12,0.1))
-#    plot(arange(5.5,12,0.1),y,'k-')       
+    pHsaggregated = array([5.6, 7.5,8.4,10.0,11.1,11.8,5.6, 7.5,8.4,10.0,11.1,11.8,7.0,7.8,8.4,9.0,9.4,7.0,7.8,8.4,9.0,9.4])
+    QYsaggregated = append(kr16_1/kr16_1[2],kr16_2/kr16_2[2])
+    QYsaggregated= append(QYsaggregated,kr_s1_exp2/kr_s1_exp2[2])
+    QYsaggregated = append(QYsaggregated,kr_s2_exp2/kr_s2_exp2[2])
+    plot(pHsaggregated,QYsaggregated,'sk')
+    fitted = numpy.polynomial.polynomial.polyfit(pHsaggregated,QYsaggregated,5)
+    plot(linspace(5.6,12,100),numpy.polynomial.polynomial.polyval(linspace(5.6,12,100),fitted),'r')
+#    plot([5.6, 7.5,8.4,10.0,11.1,11.8],kr16_1/kr16_1[2],'sk')
+#    plot([5.6, 7.5,8.4,10.2,11.1,12.0],kr16_2/kr16_2[2],'sk')
+#    plot([7.0,7.8,8.4,9.0,9.4],kr_s1_exp2/kr_s1_exp2[2],'sk')
+#    plot([7.0,7.8,8.4,9.0,9.4],kr_s2_exp2/kr_s2_exp2[2],'sk')
+    
     ylabel('k$_r$ (ns$^{-1}$)')
     xlabel('pH')
     
     QYFeb91= array([0.00010049827821621676, 0.00013066903216727769, 0.00022781724298307344, 0.00025977476507963978, 0.00023207098018508698])*100
     QYFeb92=array([8.4493517569121898e-05, 0.00015499338993774661, 0.00023270709386317347, 0.00030337966297159114, 0.00026606606002984402])*100
-    QYFeb161 = array([  1.22096847e-05,   1.63693716e-05,   2.63285990e-05,
+    QYFeb161 = array([  1.22096847e-05,
+                     1.63693716e-05,   2.63285990e-05,
          1.93740716e-05,   6.82283240e-06,   6.99873779e-06])*100
     QYFeb162 = array([  2.64292285e-05,   3.57962025e-05,   7.18266873e-05,
          4.94787370e-05,   1.16480806e-05,   8.31632682e-07])*100
     figure() 
+    
     plot([5.6, 7.5,8.4,10.0,11.1,11.8],QYFeb161,'-s')
     plot([5.6, 7.5,8.4,10.2,11.1,12.0],QYFeb162,'-s')
     plot([7.0,7.8,8.4,9.0,9.4],QYFeb91,'-s')
@@ -958,15 +971,16 @@ def Feb16QY():
     nE = 1.359
     nQ = 1.44
     nW = 1.333  ## refractive index water    
-    nhex = 1.5
+    nhex = 1.375
     
     fig = figure()
     ax1 = fig.add_subplot(111)
     ax1.set_ylabel('relative QY')
     ax1.set_xlabel('pH')
    
-    filenamelist = ['oleate1nm.dat','oleate2nm.dat','anthracene1.dat','anthracene2.dat','anthracene3.dat']
-    uv = loadtxt('160216/CdSPPA_TCSPC_160216.csv',skiprows = 2,delimiter = ',', unpack = True,usecols = (0,15,15,14,14,14))
+    filenamelist = ['oleate1nm.dat','oleate2nm.dat','anthracene1.dat','anthracene2.dat','anthracene3.dat','anthracene5.dat']
+    uv = loadtxt('160216/CdSPPA_TCSPC_160216.csv',skiprows = 2,delimiter = ',', unpack = True,
+                 usecols = (0,15,15,14,14,14,14))
     uv[1:]-=transpose([uv[1:,0]])
     x330=argmin(abs(uv[0]-330))
     absorbances = 1-10**-uv[1:,x330]
@@ -981,16 +995,24 @@ def Feb16QY():
     for i in range(len(filenamelist)):
         
         a = loadtxt('160216/'+filenamelist[i], skiprows=2, delimiter = '\t', unpack = True, usecols = (2,3))
+        
         a[1]/=absorbances[i]
-       
+        
         r = RamanSpectrum(pandas.Series(a[1],a[0]))
-        r-=r[350]
-        QYs=append(QYs,r.calc_area((335,500)))
+        if i>1:
+            r-=r[550]
+        else:
+            r-=r[355]
+        QYs=append(QYs,r[470]*1257)#r.calc_area((335,500)))
+        if i ==5:
+            anthracenefluorescencearea = r[470]*1257
+        print r.calc_area((335,500))/r[470]
         r.plot(label=filenamelist[i])
-    anthracenefluorescencearea = QYs[2]*5
-    oleatevalue = QYs[0]*5
-    print 'oleate QY', oleatevalue*0.27/(1+0.00145*158)*nhex**2/nE**2 /anthracenefluorescencearea
-    legend()
+    
+    legend(filenamelist)
+    oleatevalue = QYs[0]
+    print 'oleate QY', oleatevalue*0.27/(1+0.00145*158)*nhex**2/nE**2/QYs[2]
+    
    
     
     
@@ -1058,35 +1080,47 @@ def Feb16QY():
     
 def Feb16QY2():
     fig =figure()
+    
     ax1 = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
     sample1 = list()
     sample2 = list()
+    
+
+
+    
+    
     uvvisfile = '160216/CdSPPA_TCSPC_160216.csv'
-    sample1.append(0.2*indivQY(uvvisfile, 'b','o','160216/CdS1pH5.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample1.append(0.2*indivQY(uvvisfile, 'd','o','160216/CdS1pH7.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample1.append(0.2*indivQY(uvvisfile, 'm','o','160216/CdS1pH8pt5b.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample1.append(0.2*indivQY(uvvisfile, 'f','o','160216/CdS1pH10.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample1.append(0.2*indivQY(uvvisfile, 'h','o','160216/CdS1pH11.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample1.append(0.2*indivQY(uvvisfile, 'j','o','160216/CdS1pH12.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'c','o','160216/CdS2pH5.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'e','o','160216/CdS2pH7.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'n','o','160216/CdS2pH8pt5.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'g','o','160216/CdS2pH10.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'i','o','160216/CdS2pH11.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
-    sample2.append(0.2*indivQY(uvvisfile, 'k','o','160216/CdS2pH12.dat', 
-                    '160216/anthracene1.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    
+    
+    sample1.append(indivQY(uvvisfile, 'b','o','160216/CdS1pH5.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample1.append(indivQY(uvvisfile, 'd','o','160216/CdS1pH7.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample1.append(indivQY(uvvisfile, 'm','o','160216/CdS1pH8pt5b.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample1.append(indivQY(uvvisfile, 'f','o','160216/CdS1pH10.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample1.append(indivQY(uvvisfile, 'h','o','160216/CdS1pH11.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample1.append(indivQY(uvvisfile, 'j','o','160216/CdS1pH12.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'c','o','160216/CdS2pH5.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'e','o','160216/CdS2pH7.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'n','o','160216/CdS2pH8pt5.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'g','o','160216/CdS2pH10.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'i','o','160216/CdS2pH11.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    sample2.append(indivQY(uvvisfile, 'k','o','160216/CdS2pH12.dat', 
+                    '160216/anthracene5.dat',fluorescencerange = (400,460), excitationwavelength=330,UVVisplot = ax1,fluorplot = ax2))
+    figure()
+    suptitle('qy2')
+    plot([5.6, 7.5,8.4,10.0,11.1,11.8],sample1)
+    plot([5.6, 7.5,8.4,10.0,11.1,11.8],sample2)
     return sample1,sample2
 def Feb16_calculate_kr():
     """calculated radiative rate of recombination (kr) for Feb9 data.  TCSPC and Fluorescence"""
@@ -1099,12 +1133,22 @@ def Feb16_calculate_kr():
     tau_ave_s1 = sum(timeconstants_s1['tau']**2*timeconstants_s1['amp'],axis = 1)/sum(timeconstants_s1['tau']*timeconstants_s1['amp'],axis = 1)
     tau_ave_s2 = sum(timeconstants_s2['tau']**2*timeconstants_s2['amp'],axis = 1)/sum(timeconstants_s2['tau']*timeconstants_s2['amp'],axis = 1)
     print tau_ave_s1, tau_ave_s2, QY1, QY2
- 
+      
     
     kr_s1_2exp = array(QY1)/tau_ave_s1[1:]
     kr_s2_2exp = array(QY2)/tau_ave_s2[1:]
     
-
+    knrs = 1/timeconstants_s1['tau'][1:]-transpose([QY1/tau_ave_s1[1:]]*2)
+    knrs2 = 1/timeconstants_s2['tau'][1:]-transpose([QY2/tau_ave_s2[1:]]*2)
+    close('all')
+    figure()
+    suptitle('non radiative rates')
+    plot(pHs, knrs[:,0])
+    plot(pHs, knrs[:,1])
+    plot(pHs, knrs2[:,0])
+    plot(pHs, knrs2[:,1])
+    legend(['sample1pop1', 'sample1pop2', 'sample2pop1', 'sample2pop2'])
+    
     
     
     figure()
@@ -1300,7 +1344,17 @@ def Feb17CdSeTCSPC(numberofexponentials):
 #    xlabel('time (ns)')
     
     return (timeconstants_s1)
-
+    
+def Feb17UVVisfigure():
+    uvvis = loadtxt('160217/160217TCSPC.csv', delimiter = ',', unpack = True,skiprows = 1,usecols=(0,1,9,13,17))
+    
+    for i in uvvis[1:]:
+        i-=i[0]
+        i=SGsmooth(uvvis[0],i)
+        p = findpeak(uvvis[0],i,(520,530))
+        i/=p[1]
+        plot(uvvis[0],i)
+    return 0
 def Feb17CdSeQYs():
     fluorfilelist = ['160217/Raman160217/160217_26.txt',
                     '160217/Raman160217/160217_05.txt',
@@ -1332,17 +1386,23 @@ def Feb17CdSeQYs():
                      
     uvvis = loadtxt('160217/160217TCSPC.csv', delimiter = ',', unpack = True,skiprows = 1)
     uvvis[1:]-=transpose([uvvis[1:,0]])
+    forfigure = uvvis[array([0,1,4])]
+    forfigure
     x473nm = np.where(uvvis[0]==473)[0][0]
     print x473nm
+    
+    for i in uvvis[1:]: plot(uvvis[0],i)
+    figure()
     absorbances_dots = uvvis[1:-1,x473nm]
     plot(absorbances_dots)
     figure()
-    absorbance_anth = uvvis[1:-1,x473nm]
+    absorbance_anth = uvvis[-1,x473nm]
     
     fluorescencedots = array([])
     
     for i in fluorfilelist:
         s = RamanSpectrum(i)
+        s= removespikes(s,thresholds=[3,3])
         
         s.plot()
         fluorescencedots = np.append(fluorescencedots, s.calc_area((480,620)))
@@ -1355,7 +1415,7 @@ def Feb17CdSeQYs():
     
     fluoryields = fluorescencedots*0.65*(1-10**(-absorbance_anth))*nliq**2/nE**2 /antharea/(1-10**(-absorbances_dots)) 
     
-    
+    print 'oleate capped dots QY:', fluoryields[0]
     fluoryields_PPA = transpose(fluoryields[1:].reshape((-1,4)))
     figure()
     plot([5,7,8,9,11],fluoryields_PPA[0])
@@ -1370,17 +1430,26 @@ def Feb17CdSeQYs():
 def Feb17CdSekr():
     timeconstants_s1 = Feb17CdSeTCSPC(2)  
     tau_ave = array(sum(timeconstants_s1['tau']**2*timeconstants_s1['amp'],axis=1)/sum(timeconstants_s1['tau']*timeconstants_s1['amp'],axis=1))
-    tau_ave = tau_ave[array([1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23])]
     
+    
+    print 'oleate ks', 1/timeconstants_s1['tau'][0]
+    print 'oleate kr, knr1,knr2', 0.026/tau_ave[0], 1/timeconstants_s1['tau'][0]-0.026/tau_ave[0]
+    tau_ave = tau_ave[array([1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23])]
     QYs =  Feb17CdSeQYs()
     
     kr = (QYs/tau_ave).reshape((4,5))
+    print timeconstants_s1.shape, QYs.shape
+    knrs = 1/timeconstants_s1['tau'][array([1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23])]-np.transpose([(QYs/tau_ave)]*2)
+    print knrs
     kr_ave = np.mean(kr,axis = 0)
     kr_std = np.std(kr,axis = 0)
     close('all')
     figure()
     plt.errorbar([5,7,8,9,11],kr_ave, yerr=kr_std)
   
-#    xlabel('time (ns)')
+    xlabel('pH')
+    ylabel('k$_r$ (ns$^{-1}$)')
+    
+    print 'K_nr', knrs
     
     return (kr_ave, kr_std)
